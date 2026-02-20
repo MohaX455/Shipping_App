@@ -1,4 +1,4 @@
-import { ContactHero, ContactForm, ContactMap } from '@/components/contact';
+import { ContactHero, ContactForm, ContactMap } from '@/components/dashboard/contact';
 
 export const metadata = {
     title: 'Contact - Social Shipping',

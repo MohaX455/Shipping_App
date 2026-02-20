@@ -23,7 +23,7 @@ export function HeroSection() {
                 <div className="w-full flex flex-col justify-end md:justify-center min-h-fit md:min-h-[750px]">
                     <div className="space-y-2 md:space-y-4">
                         {/* Main Heading */}
-                        <h1 className="uppercase text-3xl md:text-6xl lg:text-6xl font-black tracking-tight leading-tight font-heading text-white">
+                        <h1 className="uppercase text-3xl md:text-6xl lg:text-6xl font-semibold tracking-tight leading-tight font-heading text-white">
                             Save Money Shipping. Make<br className="hidden md:block" /> Money Traveling
                         </h1>
 

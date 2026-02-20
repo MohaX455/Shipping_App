@@ -1,10 +1,7 @@
-/* Fonts modernes - Montserrat & Inter (loaded from layout) */
-
 @import "tailwindcss";
 
 :root {
-    --font-heading: "Montserrat", system-ui, -apple-system, sans-serif;
-    --font-body: "Inter", system-ui, -apple-system, sans-serif;
+    --primary-font: "Poppins", sans-serif;
     --color-blue: #252b50;
     --color-lightblue: #4053a1;
     --color-skyblue: #00fcff;
@@ -13,7 +10,7 @@
 
 html {
     scroll-behavior: smooth;
-    font-family: var(--font-body);
+    font-family: var(--primary-font);
 }
 
 body {
@@ -22,7 +19,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: white;
-    font-family: var(--font-body);
+    font-family: var(--primary-font);
 }
 
 h1,
@@ -31,8 +28,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-heading);
-    font-weight: 600;
+    font-family: var(--primary-font);
+    font-weight: 700;
 }
 
 /* Utility spacing used by pages */
