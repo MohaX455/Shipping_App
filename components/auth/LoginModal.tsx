@@ -78,7 +78,7 @@ export default function LoginModal({ open, onClose, openSignup, openForgot }: Pr
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         disabled={isDisabled}
-                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 placeholder:opacity-60 focus:outline-none focus:ring-2 focus:ring-sky-400 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 placeholder:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-950 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         placeholder="you@email.com"
                     />
                 </div>
@@ -91,7 +91,7 @@ export default function LoginModal({ open, onClose, openSignup, openForgot }: Pr
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         disabled={isDisabled}
-                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 placeholder:opacity-60 focus:outline-none focus:ring-2 focus:ring-sky-400 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 placeholder:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-950 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         placeholder="Your password"
                     />
                 </div>
@@ -100,7 +100,7 @@ export default function LoginModal({ open, onClose, openSignup, openForgot }: Pr
                     <button
                         type="button"
                         disabled={isDisabled}
-                        className="text-sm text-sky-600 hover:underline disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        className="text-sm text-slate-600 hover:text-slate-700 hover:underline disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                         onClick={() => {
                             onClose();
                             openForgot();
@@ -113,7 +113,7 @@ export default function LoginModal({ open, onClose, openSignup, openForgot }: Pr
                 <button
                     type="submit"
                     disabled={isDisabled}
-                    className="w-full px-5 py-3.5 rounded-md bg-gradient-to-r from-sky-600 to-sky-500 text-white text-base font-semibold shadow hover:shadow-lg transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full px-5 py-3.5 rounded-md bg-blue-950 text-white text-base font-semibold shadow hover:shadow-lg transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
                 >
                     {isLoading ? (
                         <>
@@ -130,7 +130,7 @@ export default function LoginModal({ open, onClose, openSignup, openForgot }: Pr
                     <button
                         type="button"
                         disabled={isDisabled}
-                        className="text-purple-600 font-semibold hover:underline disabled:opacity-50 cursor-pointer"
+                        className="text-slate-600 font-semibold hover:underline disabled:opacity-50 cursor-pointer"
                         onClick={() => {
                             onClose();
                             openSignup();

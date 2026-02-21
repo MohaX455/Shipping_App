@@ -29,7 +29,7 @@ export function HowItWorksSection() {
 
                 {/* Title */}
                 <div className="text-center mb-14">
-                    <h2 className="text-3xl font-semibold text-black">
+                    <h2 className="text-3xl font-semibold text-slate-600">
                         How It Works
                     </h2>
                 </div>

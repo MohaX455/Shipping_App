@@ -89,7 +89,7 @@ export function UpcomingTravelersSection() {
             <div className="max-w-330 mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-14">
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-600 mb-4 font-heading">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-600 mb-4 font-heading">
                         Upcoming Travelers Trips
                     </h2>
                 </div>

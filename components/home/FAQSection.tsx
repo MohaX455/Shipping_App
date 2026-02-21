@@ -87,7 +87,7 @@ export function FAQSection() {
 
                 {/* Title */}
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl sm:text-4xl text-slate-600 block mb-4">
+                    <h2 className="text-3xl sm:text-4xl text-slate-600 font-semibold block mb-4">
                             Frequently Asked Questions
                     </h2>
                     <p className="text-lg text-slate-600 font-body">

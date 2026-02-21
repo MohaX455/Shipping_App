@@ -158,7 +158,7 @@ export function TravelerSteps({ travelerData }: TravelerStepsProps) {
                         href="/dashboard"
                         className="inline-block bg-[#00fcff] text-[#252b50] font-semibold text-lg px-8 py-3 rounded-md hover:bg-[#00e5e5] transition-colors"
                     >
-                        Register As Traveler
+                        My Recent List
                     </Link>
                 </div>
             </div>

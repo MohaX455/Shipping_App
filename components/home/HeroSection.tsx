@@ -28,7 +28,7 @@ export function HeroSection() {
                         </h1>
 
                         {/* Description - Hidden on mobile */}
-                        <p className="hidden md:block text-lg md:text-xl font-medium max-w-3xl leading-relaxed font-body text-white/90">
+                        <p className="hidden md:block text-lg font-medium max-w-3xl leading-relaxed font-body text-white/90">
                             Social Shipping connects senders who want to save on shipping with travelers happy to earn by carrying verified parcels along their route — simple, secure, and rewarding for everyone.
                         </p>
 
