@@ -37,7 +37,7 @@ export function TravelerSteps({ travelerData }: TravelerStepsProps) {
                 </nav>
 
                 {/* Title */}
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-center mb-4">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-center mb-4">
                     I am a <span className="text-[#4053a1]">TRAVELER</span>
                 </h2>
                 <p className="text-center text-slate-700 text-base sm:text-lg mb-12">

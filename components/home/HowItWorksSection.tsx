@@ -4,7 +4,7 @@ import { IMAGE_BASE } from '../../lib/constants'
 export function HowItWorksSection() {
     const steps = [
         {
-            icon: `${IMAGE_BASE}/home-img02.webp`, // legacy image
+            icon: `${IMAGE_BASE}/home-img02.webp`,
             title: 'Find a matching traveler or sender',
             description:
                 'Social Shipping matches travelers with extra luggage space to senders who need to send packages along the same route.',

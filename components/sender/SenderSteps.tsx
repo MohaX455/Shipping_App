@@ -37,7 +37,7 @@ export function SenderSteps({ senderData }: SenderStepsProps) {
                 </nav>
 
                 {/* Title */}
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-center mb-4 font-heading">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-center mb-4 font-heading">
                     I am a <span className="text-[#4053a1]">SENDER</span>
                 </h2>
                 <p className="text-center text-slate-700 text-base sm:text-lg mb-12 font-body">

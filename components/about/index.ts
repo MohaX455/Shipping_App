@@ -1,5 +1,2 @@
-export { AboutHeader } from './AboutHeader';
-export { AboutMission } from './AboutMission';
+export { AboutBanner } from './AboutBanner';
 export { AboutConcept } from './AboutConcept';
-export { AboutRole } from './AboutRole';
-export { AboutCTA } from './AboutCTA';

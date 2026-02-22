@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export function HelpContent() {
     const topics = [
         {
@@ -19,17 +21,20 @@ export function HelpContent() {
     ];
 
     return (
-        <section className="w-full py-12 sm:py-16 lg:py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                    {topics.map((t, idx) => (
-                        <article key={idx} className="p-6 bg-slate-50 rounded-xl border border-slate-200">
-                            <h3 className="text-xl font-semibold text-slate-900 mb-2 font-heading">{t.title}</h3>
-                            <p className="text-slate-600 font-body leading-relaxed">{t.text}</p>
-                        </article>
-                    ))}
+        <main className="middle contact-page">
+            <section className="w-full py-12">
+                <div className="max-w-330 mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Breadcrumb */}
+                    <nav className="flex items-center gap-2 text-md mb-8 font-body">
+                        <Link href="/" className="text-slate-600 hover:text-[#4053a1]">
+                            Welcome
+                        </Link>
+                        <span className="text-slate-400">{" / "}</span>
+                        <span className="text-[#4053a1] font-medium">Contact Us</span>
+                    </nav>
                 </div>
-            </div>
-        </section>
+                
+            </section>
+        </main>
     );
 }
