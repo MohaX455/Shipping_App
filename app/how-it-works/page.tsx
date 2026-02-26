@@ -1,4 +1,4 @@
-import { HowItWorksBanner, HowItWorksConcept } from '@/components/how-it-works';
+import { HowItWorksBanner, HowItWorksConcept, HowItWorksSteps } from '@/components/how-it-works';
 
 export const metadata = {
     title: 'How It Works - Social Shipping',
@@ -10,6 +10,7 @@ export default function HowItWorksPage() {
         <main className="w-full bg-slate-50">
             <HowItWorksBanner />
             <HowItWorksConcept />
+            <HowItWorksSteps />
         </main>
     );
 }
