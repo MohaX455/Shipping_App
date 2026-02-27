@@ -1,4 +1,4 @@
-import { AboutBanner, AboutConcept } from '@/components/about';
+import { AboutBanner, AboutConcept, AboutStats } from '@/components/about';
 
 export const metadata = {
     title: 'About Social Shipping',
@@ -10,6 +10,7 @@ export default function AboutPage() {
         <main className="w-full bg-slate-50">
             <AboutBanner />
             <AboutConcept />
+            <AboutStats />
         </main>
     );
 }

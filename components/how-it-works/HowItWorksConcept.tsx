@@ -47,7 +47,7 @@ export function HowItWorksConcept() {
 
                     {/* Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {steps.map((step, index) => (
+                        {steps.map((step, index) => (                            
                             <div
                                 key={index}
                                 className="bg-white border border-gray-200 rounded-lg p-8 text-center relative"
