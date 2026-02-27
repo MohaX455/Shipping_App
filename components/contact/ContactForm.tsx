@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 
-export default function ContactForm() {
+export const ContactForm = () => {
     const [form, setForm] = useState({ name: '', email: '', mobile: '', subject: '', query: '' })
     const [isLoading, setIsLoading] = useState(false)
 

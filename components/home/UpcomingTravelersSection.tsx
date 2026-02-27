@@ -85,7 +85,7 @@ export function UpcomingTravelersSection() {
     };
 
     return (
-        <section className="md:mt-18 py-16 sm:py-18 bg-gradient-to-b from-slate-50 via-white to-slate-50 border-b border-slate-200">
+        <section className="md:mt-18 py-14 sm:py-16 bg-gradient-to-b from-slate-50 via-white to-slate-50 border-b border-slate-200">
             <div className="max-w-330 mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-14">
