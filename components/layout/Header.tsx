@@ -10,7 +10,6 @@ import { usePathname } from 'next/navigation';
 import { NAV_LINKS, IMAGE_BASE } from '@/lib/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faLinkedinIn, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import { faBars, faX, faUser } from '@fortawesome/free-solid-svg-icons';
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

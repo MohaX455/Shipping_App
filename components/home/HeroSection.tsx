@@ -19,7 +19,7 @@ export function HeroSection() {
                     />
 
                     {/* Mobile Black Overlay */}
-                    <div className="absolute inset-0 bg-black/40 md:hidden"></div>
+                    <div className="absolute inset-0 bg-black/25 md:hidden"></div>
                 </div>
 
                 {/* Content */}

@@ -39,32 +39,32 @@ export default function TravelerPage() {
     const [travelerPageData, setTravelerPageData] = useState<TravelerPageData>({});
     const [benefits, setBenefits] = useState<Benefit[]>([]);
 
-    useEffect(() => {
-        const fetchTravelerData = async () => {
-            try {
-                setIsLoading(true);
-                const response = await fetch('https://api.jetcamer.com/social-shipping/api/traveler-page-data');
+    // useEffect(() => {
+    //     const fetchTravelerData = async () => {
+    //         try {
+    //             setIsLoading(true);
+    //             const response = await fetch('https://api.jetcamer.com/social-shipping/api/traveler-page-data');
                 
-                if (response.ok) {
-                    const data: ApiResponse = await response.json();
+    //             if (response.ok) {
+    //                 const data: ApiResponse = await response.json();
                     
-                    if (data.travelerPage) {
-                        setTravelerPageData(data.travelerPage);
-                    }
+    //                 if (data.travelerPage) {
+    //                     setTravelerPageData(data.travelerPage);
+    //                 }
                     
-                    if (data.benefit) {
-                        setBenefits(data.benefit);
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching traveler data:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+    //                 if (data.benefit) {
+    //                     setBenefits(data.benefit);
+    //                 }
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching traveler data:', error);
+    //         } finally {
+    //             setIsLoading(false);
+    //         }
+    //     };
 
-        fetchTravelerData();
-    }, []);
+    //     fetchTravelerData();
+    // }, []);
 
     return (
         <main className="w-full">
