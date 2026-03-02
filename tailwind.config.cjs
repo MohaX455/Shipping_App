@@ -8,9 +8,9 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                heading: ['Montserrat', 'system-ui', '-apple-system', 'sans-serif'],
-                body: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-                sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                heading: ['Poppins', 'system-ui', '-apple-system', 'sans-serif'],
+                body: ['Poppins', 'system-ui', '-apple-system', 'sans-serif'],
+                sans: ['Poppins', 'system-ui', '-apple-system', 'sans-serif'],
             },
             colors: {
                 primary: {

@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -37,7 +35,7 @@ export function TravelerSteps({ travelerData }: TravelerStepsProps) {
                 </nav>
 
                 {/* Title */}
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-center mb-4">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-center mb-4">
                     I am a <span className="text-[#4053a1]">TRAVELER</span>
                 </h2>
                 <p className="text-center text-slate-700 text-base sm:text-lg mb-12">
@@ -158,7 +156,7 @@ export function TravelerSteps({ travelerData }: TravelerStepsProps) {
                         href="/dashboard"
                         className="inline-block bg-[#00fcff] text-[#252b50] font-semibold text-lg px-8 py-3 rounded-md hover:bg-[#00e5e5] transition-colors"
                     >
-                        Register As Traveler
+                        My Recent List
                     </Link>
                 </div>
             </div>

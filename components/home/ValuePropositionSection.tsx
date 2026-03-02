@@ -33,7 +33,7 @@ export function ValuePropositionSection() {
         <section className="py-20 bg-white">
             <div className="max-w-330 mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-950 mb-4 font-heading relative after:content-[''] after:block after:mx-auto after:mt-6 after:w-32 after:h-1.5 after:bg-cyan-400 after:rounded-full after:opacity-90">
+                    <h2 className="text-3xl md:text-4xl font-semibold text-blue-950 mb-4 font-heading relative after:content-[''] after:block after:mx-auto after:mt-6 after:w-32 after:h-1.5 after:bg-cyan-400 after:rounded-full after:opacity-90">
                         Why Choose Social Shipping?
                     </h2>
                 </div>

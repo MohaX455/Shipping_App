@@ -78,7 +78,7 @@ export default function ForgotPasswordModal({ open, onClose, openLogin }: Props)
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={isDisabled}
-                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 placeholder:opacity-60 focus:outline-none focus:ring-2 focus:ring-sky-400 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 placeholder:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-950 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         placeholder="you@email.com"
                     />
                 </div>
@@ -87,7 +87,7 @@ export default function ForgotPasswordModal({ open, onClose, openLogin }: Props)
                     <button
                         type="button"
                         disabled={isDisabled}
-                        className="text-sm text-sky-600 hover:underline disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        className="text-sm text-slate-600 hover:text-slate-700 hover:underline disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                         onClick={() => {
                             setLocalError(null);
                             clearError();
@@ -103,7 +103,7 @@ export default function ForgotPasswordModal({ open, onClose, openLogin }: Props)
                 <button
                     type="submit"
                     disabled={isDisabled}
-                    className="w-full px-5 py-3.5 rounded-md bg-gradient-to-r from-sky-600 to-sky-500 text-white text-base font-semibold shadow hover:shadow-lg transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full px-5 py-3.5 rounded-md bg-blue-950 text-white text-base font-semibold shadow hover:shadow-lg transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
                 >
                     {isLoading ? (
                         <>

@@ -1,153 +1,56 @@
-'use client';
+"use client"
+import React, { useState } from 'react'
+import Image from 'next/image'
 
-import { useState } from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Send } from 'lucide-react';
+export const ContactForm = () => {
+    const [form, setForm] = useState({ name: '', email: '', mobile: '', subject: '', query: '' })
+    const [isLoading, setIsLoading] = useState(false)
 
-const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    mobile: Yup.string().required('Phone number is required'),
-    subject: Yup.string().required('Subject is required'),
-    query: Yup.string().required('Message is required'),
-});
+    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const { name, value } = e.target
+        setForm(prev => ({ ...prev, [name]: value }))
+    }
 
-export function ContactForm() {
-    const [isLoading, setIsLoading] = useState(false);
-
-    const formik = useFormik({
-        initialValues: {
-            name: '',
-            email: '',
-            mobile: '',
-            subject: '',
-            query: '',
-        },
-        validationSchema,
-        onSubmit: async (values, { resetForm }) => {
-            setIsLoading(true);
-            try {
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                console.log('Form submitted:', values);
-                alert('Message sent! We will get back to you soon.');
-                resetForm();
-            } catch (error) {
-                console.error('Error submitting form:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        },
-    });
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault()
+        setIsLoading(true)
+        // Keep behavior minimal to avoid external calls; mimic legacy by resetting
+        setTimeout(() => {
+            setIsLoading(false)
+            setForm({ name: '', email: '', mobile: '', subject: '', query: '' })
+            // In legacy they showed swal success; we avoid external libs to prevent warnings
+        }, 700)
+    }
 
     return (
-        <form onSubmit={formik.handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* Name */}
+        <form onSubmit={handleSubmit} className="contact-form Reative mt-6">
+            {isLoading && <div className="LoaderForm">Loading...</div>}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-semibold text-slate-800 mb-2">
-                        Your Name
-                    </label>
-                    <input
-                        type="text"
-                        {...formik.getFieldProps('name')}
-                        className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 transition ${formik.touched.name && formik.errors.name
-                                ? 'border-red-500 focus:ring-red-500'
-                                : 'border-slate-300 focus:ring-blue-500'
-                            }`}
-                        placeholder="John Doe"
-                    />
-                    {formik.touched.name && formik.errors.name && (
-                        <p className="text-red-500 text-xs mt-1">{formik.errors.name}</p>
-                    )}
+                    <label className="block text-sm text-blue-900">Your Name</label>
+                    <input name="name" value={form.name} onChange={handleChange} className="w-full border border-slate-400 p-2 rounded-md bg-white mt-1" />
                 </div>
-
-                {/* Email */}
                 <div>
-                    <label className="block text-sm font-semibold text-slate-800 mb-2">
-                        Email ID
-                    </label>
-                    <input
-                        type="email"
-                        {...formik.getFieldProps('email')}
-                        className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 transition ${formik.touched.email && formik.errors.email
-                                ? 'border-red-500 focus:ring-red-500'
-                                : 'border-slate-300 focus:ring-blue-500'
-                            }`}
-                        placeholder="your@email.com"
-                    />
-                    {formik.touched.email && formik.errors.email && (
-                        <p className="text-red-500 text-xs mt-1">{formik.errors.email}</p>
-                    )}
+                    <label className="block text-sm text-blue-900">E-Mail ID</label>
+                    <input name="email" value={form.email} onChange={handleChange} className="w-full border border-slate-400 p-2 rounded-md bg-white mt-1" />
                 </div>
-
-                {/* Phone */}
                 <div>
-                    <label className="block text-sm font-semibold text-slate-800 mb-2">
-                        Phone No.
-                    </label>
-                    <input
-                        type="tel"
-                        {...formik.getFieldProps('mobile')}
-                        className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 transition ${formik.touched.mobile && formik.errors.mobile
-                                ? 'border-red-500 focus:ring-red-500'
-                                : 'border-slate-300 focus:ring-blue-500'
-                            }`}
-                        placeholder="+1 (555) 000-0000"
-                    />
-                    {formik.touched.mobile && formik.errors.mobile && (
-                        <p className="text-red-500 text-xs mt-1">{formik.errors.mobile}</p>
-                    )}
+                    <label className="block text-sm text-blue-900">Phone No.</label>
+                    <input name="mobile" value={form.mobile} onChange={handleChange} className="w-full border border-slate-400 p-2 rounded-md bg-white mt-1" />
                 </div>
-
-                {/* Subject */}
                 <div>
-                    <label className="block text-sm font-semibold text-slate-800 mb-2">
-                        Subject
-                    </label>
-                    <input
-                        type="text"
-                        {...formik.getFieldProps('subject')}
-                        className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 transition ${formik.touched.subject && formik.errors.subject
-                                ? 'border-red-500 focus:ring-red-500'
-                                : 'border-slate-300 focus:ring-blue-500'
-                            }`}
-                        placeholder="What is this about?"
-                    />
-                    {formik.touched.subject && formik.errors.subject && (
-                        <p className="text-red-500 text-xs mt-1">{formik.errors.subject}</p>
-                    )}
+                    <label className="block text-sm text-blue-900">Subject</label>
+                    <input name="subject" value={form.subject} onChange={handleChange} className="w-full border border-slate-400 p-2 rounded-md bg-white mt-1" />
                 </div>
             </div>
-
-            {/* Query/Message - Full Width */}
-            <div>
-                <label className="block text-sm font-semibold text-slate-800 mb-2">
-                    Your Query
-                </label>
-                <textarea
-                    {...formik.getFieldProps('query')}
-                    rows={5}
-                    className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 transition resize-none ${formik.touched.query && formik.errors.query
-                            ? 'border-red-500 focus:ring-red-500'
-                            : 'border-slate-300 focus:ring-blue-500'
-                        }`}
-                    placeholder="Tell us more about your query..."
-                />
-                {formik.touched.query && formik.errors.query && (
-                    <p className="text-red-500 text-xs mt-1">{formik.errors.query}</p>
-                )}
+            <div className="mt-4">
+                <label className="block text-sm text-blue-900">Your Query</label>
+                <textarea name="query" value={form.query} onChange={handleChange} style={{ height: 120 }} className="w-full border border-slate-400 p-2 mt-2 rounded-md bg-white" />
             </div>
-
-            <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-                {isLoading ? 'Sending...' : 'Send Message'}
-                {!isLoading && <Send className="w-4 h-4" />}
+            <button type="submit" className="send-btn mt-4 inline-flex items-center px-4 py-2 bg-blue-900 text-white rounded">
+                Send Message
+                <span className="ml-2" aria-hidden>✉️</span>
             </button>
         </form>
-    );
+    )
 }

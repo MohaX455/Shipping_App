@@ -1,4 +1,4 @@
-import { HelpHero, HelpContent, HelpFAQ } from '@/components/help';
+import { HelpBanner, HelpContent, HelpFAQ } from '@/components/help';
 
 export const metadata = {
     title: 'Help Center - Social Shipping',
@@ -7,8 +7,8 @@ export const metadata = {
 
 export default function HelpPage() {
     return (
-        <main className="w-full bg-white">
-            <HelpHero />
+        <main className="w-full bg-slate-50">
+            <HelpBanner />
             <HelpContent />
             <HelpFAQ />
         </main>

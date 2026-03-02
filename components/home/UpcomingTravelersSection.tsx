@@ -17,79 +17,79 @@ export function UpcomingTravelersSection() {
     const [travelers, setTravelers] = useState<TravelCard[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchTravelers = async () => {
-            try {
-                setIsLoading(true);
-                const apiUrl = 'https://api.jetcamer.com/social-shipping/api/home-page-data';
+    // useEffect(() => {
+    //     const fetchTravelers = async () => {
+    //         try {
+    //             setIsLoading(true);
+    //             const apiUrl = 'https://api.jetcamer.com/social-shipping/api/home-page-data';
 
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                    },
-                });
+    //             const response = await fetch(apiUrl, {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Accept': 'application/json',
+    //                 },
+    //             });
 
-                if (!response.ok) {
-                    console.error(`API Error: ${response.status} ${response.statusText}`);
-                    throw new Error(`API returned ${response.status}`);
-                }
+    //             if (!response.ok) {
+    //                 console.error(`API Error: ${response.status} ${response.statusText}`);
+    //                 throw new Error(`API returned ${response.status}`);
+    //             }
 
-                const data = await response.json();
-                console.log('API Response data:', data);
+    //             const data = await response.json();
+    //             console.log('API Response data:', data);
 
-                // Try different possible keys for traveler data
-                const travelerData = data?.get_all_traveler || data?.travelers || data?.upcoming || [];
+    //             // Try different possible keys for traveler data
+    //             const travelerData = data?.get_all_traveler || data?.travelers || data?.upcoming || [];
 
-                if (!Array.isArray(travelerData) || travelerData.length === 0) {
-                    console.warn('No traveler data found in API response');
-                    setTravelers([]);
-                    setIsLoading(false);
-                    return;
-                }
+    //             if (!Array.isArray(travelerData) || travelerData.length === 0) {
+    //                 console.warn('No traveler data found in API response');
+    //                 setTravelers([]);
+    //                 setIsLoading(false);
+    //                 return;
+    //             }
 
-                // Transform API data to TravelCard format
-                const transformedTravelers: TravelCard[] = travelerData.map(
-                    (traveler: any, index: number) => ({
-                        id: traveler?.id?.toString() || String(index),
-                        travelerName: traveler?.first_name && traveler?.last_name
-                            ? `${traveler.first_name} ${traveler.last_name.charAt(0)}.`
-                            : traveler?.first_name || traveler?.name || `Traveler ${index + 1}`,
-                        travelDate: traveler?.travel_date || traveler?.date || new Date().toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                        }),
-                        fromLocation: traveler?.country_from || traveler?.from_location || traveler?.from || 'Unknown',
-                        toLocation: traveler?.country_to || traveler?.to_location || traveler?.to || 'Unknown',
-                        maxWeight: parseInt(traveler?.max_weight || traveler?.weight || '25', 10),
-                        imageUrl: traveler?.profile_image || traveler?.image || undefined,
-                    })
-                );
+    //             // Transform API data to TravelCard format
+    //             const transformedTravelers: TravelCard[] = travelerData.map(
+    //                 (traveler: any, index: number) => ({
+    //                     id: traveler?.id?.toString() || String(index),
+    //                     travelerName: traveler?.first_name && traveler?.last_name
+    //                         ? `${traveler.first_name} ${traveler.last_name.charAt(0)}.`
+    //                         : traveler?.first_name || traveler?.name || `Traveler ${index + 1}`,
+    //                     travelDate: traveler?.travel_date || traveler?.date || new Date().toLocaleDateString('en-US', {
+    //                         year: 'numeric',
+    //                         month: 'short',
+    //                         day: 'numeric',
+    //                     }),
+    //                     fromLocation: traveler?.country_from || traveler?.from_location || traveler?.from || 'Unknown',
+    //                     toLocation: traveler?.country_to || traveler?.to_location || traveler?.to || 'Unknown',
+    //                     maxWeight: parseInt(traveler?.max_weight || traveler?.weight || '25', 10),
+    //                     imageUrl: traveler?.profile_image || traveler?.image || undefined,
+    //                 })
+    //             );
 
-                setTravelers(transformedTravelers);
-            } catch (error) {
-                console.error('Error fetching travelers:', error);
-                // Don't show toast for now, just log
-                setTravelers([]);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+    //             setTravelers(transformedTravelers);
+    //         } catch (error) {
+    //             console.error('Error fetching travelers:', error);
+    //             // Don't show toast for now, just log
+    //             setTravelers([]);
+    //         } finally {
+    //             setIsLoading(false);
+    //         }
+    //     };
 
-        fetchTravelers();
-    }, []);
+    //     fetchTravelers();
+    // }, []);
 
     const handleLoadMore = () => {
         setDisplayCount((prev) => prev + 3);
     };
 
     return (
-        <section className="md:mt-18 py-16 sm:py-18 bg-gradient-to-b from-slate-50 via-white to-slate-50 border-b border-slate-200">
+        <section className="md:mt-18 py-14 sm:py-16 bg-gradient-to-b from-slate-50 via-white to-slate-50 border-b border-slate-200">
             <div className="max-w-330 mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-14">
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-600 mb-4 font-heading">
+                    <h2 className="text-3xl md:text-4xl font-semibold text-slate-600 mb-4 font-heading">
                         Upcoming Travelers Trips
                     </h2>
                 </div>

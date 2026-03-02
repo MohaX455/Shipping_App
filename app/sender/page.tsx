@@ -39,32 +39,32 @@ export default function SenderPage() {
     const [senderPageData, setSenderPageData] = useState<SenderPageData>({});
     const [benefits, setBenefits] = useState<Benefit[]>([]);
 
-    useEffect(() => {
-        const fetchSenderData = async () => {
-            try {
-                setIsLoading(true);
-                const response = await fetch('https://api.jetcamer.com/social-shipping/api/sender-page-data');
+    // useEffect(() => {
+    //     const fetchSenderData = async () => {
+    //         try {
+    //             setIsLoading(true);
+    //             const response = await fetch('https://api.jetcamer.com/social-shipping/api/sender-page-data');
                 
-                if (response.ok) {
-                    const data: ApiResponse = await response.json();
+    //             if (response.ok) {
+    //                 const data: ApiResponse = await response.json();
                     
-                    if (data.senderPage) {
-                        setSenderPageData(data.senderPage);
-                    }
+    //                 if (data.senderPage) {
+    //                     setSenderPageData(data.senderPage);
+    //                 }
                     
-                    if (data.benefit) {
-                        setBenefits(data.benefit);
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching sender data:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+    //                 if (data.benefit) {
+    //                     setBenefits(data.benefit);
+    //                 }
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching sender data:', error);
+    //         } finally {
+    //             setIsLoading(false);
+    //         }
+    //     };
 
-        fetchSenderData();
-    }, []);
+    //     fetchSenderData();
+    // }, []);
 
     return (
         <main className="w-full">

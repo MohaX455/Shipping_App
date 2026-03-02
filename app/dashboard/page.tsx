@@ -1,14 +1,5 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { SwitchForms } from "@/components/dashboard";
 
 export default function DashboardPage() {
-    const router = useRouter();
-
-    useEffect(() => {
-        router.push('/dashboard/travels');
-    }, [router]);
-
-    return null;
+  return <SwitchForms />;
 }
