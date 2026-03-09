@@ -39,11 +39,11 @@ export function HowItWorksSection() {
                     {steps.map((step, index) => (
                         <div
                             key={index}
-                            className="bg-white border border-gray-200 rounded-lg p-10 text-center relative"
+                            className="bg-white border border-gray-200 rounded-lg p-8 text-center relative"
                         >
                             {/* Icon */}
                             <div className="flex justify-center mb-6">
-                                <div className="relative h-35 w-35 overflow-hidden bg-white flex items-center justify-center">
+                                <div className="relative h-25 w-25 overflow-hidden bg-white flex items-center justify-center">
                                     <Image
                                         src={step.icon}
                                         alt={step.title}

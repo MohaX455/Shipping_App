@@ -15,7 +15,7 @@ interface TravelCard {
 export function UpcomingTravelersSection() {
     const [displayCount, setDisplayCount] = useState(3);
     const [travelers, setTravelers] = useState<TravelCard[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     // useEffect(() => {
     //     const fetchTravelers = async () => {
