@@ -106,15 +106,15 @@ export default function SignupModal({ open, onClose, openLogin }: Props) {
 
                 <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
-                        <input
-                            name="name"
-                            type="text"
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            disabled={isDisabled}
-                                className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 focus:outline-none focus:border focus:border-blue-900 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                            placeholder="John Doe"
-                        />
+                    <input
+                        name="name"
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        disabled={isDisabled}
+                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 focus:outline-none focus:border focus:border-blue-900 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        placeholder="John Doe"
+                    />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
@@ -141,7 +141,7 @@ export default function SignupModal({ open, onClose, openLogin }: Props) {
                             value={formData.address}
                             onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                             disabled={isDisabled}
-                                className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 focus:outline-none focus:border focus:border-blue-900 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 focus:outline-none focus:border focus:border-blue-900 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                             placeholder="Your address"
                         />
                     </div>
@@ -155,7 +155,7 @@ export default function SignupModal({ open, onClose, openLogin }: Props) {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         disabled={isDisabled}
-                            className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 focus:outline-none focus:border focus:border-blue-900 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 focus:outline-none focus:border focus:border-blue-900 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         placeholder="you@email.com"
                     />
                 </div>
@@ -168,7 +168,7 @@ export default function SignupModal({ open, onClose, openLogin }: Props) {
                         value={formData.mobile}
                         onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                         disabled={isDisabled}
-                            className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 focus:outline-none focus:border focus:border-blue-900 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 focus:outline-none focus:border focus:border-blue-900 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         placeholder="+1 (555) 000-0000"
                     />
                 </div>
@@ -181,7 +181,7 @@ export default function SignupModal({ open, onClose, openLogin }: Props) {
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         disabled={isDisabled}
-                            className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 focus:outline-none focus:border focus:border-blue-900 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 focus:outline-none focus:border focus:border-blue-900 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         placeholder="Create a password (min. 6 characters)"
                     />
                 </div>

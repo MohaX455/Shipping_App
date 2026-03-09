@@ -96,19 +96,19 @@ export function Header() {
                         <div className="hidden md:flex items-center gap-5 text-blue-950">
                             <div className="flex items-center text-md font-medium">Follow Us:</div>
                             <a href={contactData?.fb_link || '#'} target="_blank" rel="noreferrer" aria-label="facebook" className="hover:text-blue-600">
-                                <FaFacebookF className="h-5 w-5"/>
+                                <FaFacebookF className="h-5 w-5" />
                             </a>
                             <a href={contactData?.twitter_link || '#'} target="_blank" rel="noreferrer" aria-label="twitter" className="hover:text-sky-600">
-                                <FaTwitter className="h-5 w-5"/>
+                                <FaTwitter className="h-5 w-5" />
                             </a>
                             <a href={contactData?.linkedin_link || '#'} target="_blank" rel="noreferrer" aria-label="linkedin" className="hover:text-blue-700">
-                                <FaLinkedinIn className="h-5 w-5"/>
+                                <FaLinkedinIn className="h-5 w-5" />
                             </a>
                             <a href={contactData?.insta_link || '#'} target="_blank" rel="noreferrer" aria-label="instagram" className="hover:text-pink-600">
-                                <FaInstagram className="h-5 w-5"/>
+                                <FaInstagram className="h-5 w-5" />
                             </a>
                             <a href={contactData?.youtube_link || '#'} target="_blank" rel="noreferrer" aria-label="youtube" className="hover:text-red-600">
-                                <FaYoutube className="h-5 w-5 scale-110"/>
+                                <FaYoutube className="h-5 w-5 scale-110" />
                             </a>
 
                             {/* Login button - keep exactly as current project's login design/behavior (visual icon replaced) */}

@@ -44,14 +44,14 @@ export default function TravelerPage() {
     //         try {
     //             setIsLoading(true);
     //             const response = await fetch('https://api.jetcamer.com/social-shipping/api/traveler-page-data');
-                
+
     //             if (response.ok) {
     //                 const data: ApiResponse = await response.json();
-                    
+
     //                 if (data.travelerPage) {
     //                     setTravelerPageData(data.travelerPage);
     //                 }
-                    
+
     //                 if (data.benefit) {
     //                     setBenefits(data.benefit);
     //                 }

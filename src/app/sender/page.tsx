@@ -44,14 +44,14 @@ export default function SenderPage() {
     //         try {
     //             setIsLoading(true);
     //             const response = await fetch('https://api.jetcamer.com/social-shipping/api/sender-page-data');
-                
+
     //             if (response.ok) {
     //                 const data: ApiResponse = await response.json();
-                    
+
     //                 if (data.senderPage) {
     //                     setSenderPageData(data.senderPage);
     //                 }
-                    
+
     //                 if (data.benefit) {
     //                     setBenefits(data.benefit);
     //                 }
