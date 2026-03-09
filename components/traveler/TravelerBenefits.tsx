@@ -46,7 +46,7 @@ export function TravelerBenefits({ benefits = [] }: TravelerBenefitsProps) {
                             className="bg-white border border-slate-200 rounded-lg p-6 sm:p-8 text-center"
                         >
                             <div className="flex justify-center mb-6">
-                                <div className="relative w-24 h-24 sm:w-28 sm:h-28">
+                                <div className="relative w-18 h-18 sm:w-22 sm:h-22">
                                     <Image
                                         src={benefit.image || '/Images/traveler-img05.webp'}
                                         alt={benefit.title || `Benefit ${index + 1}`}

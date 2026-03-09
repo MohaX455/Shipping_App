@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, X, Plane, Calendar } from "lucide-react";
+import { PlaneTakeoff, PlaneLanding, Calendar, Search, X } from "lucide-react";
 
 export function HeroSearchBar() {
     const [departure, setDeparture] = useState("");
@@ -38,7 +38,7 @@ export function HeroSearchBar() {
                 {/* Departure */}
                 <div className="flex flex-col flex-1">
                     <label className="text-white font-semibold mb-3 flex items-center gap-2 text-lg">
-                        <Plane size={20} />
+                        <PlaneTakeoff className="w-6 h-6"/>
                         Departure City
                     </label>
                     <input
@@ -63,7 +63,7 @@ export function HeroSearchBar() {
                 {/* Arrival */}
                 <div className="flex flex-col flex-1">
                     <label className="text-white font-semibold mb-3 flex items-center gap-2 text-lg">
-                        <Plane size={20} className="rotate-180" />
+                        <PlaneLanding className="w-6 h-6"/>
                         Arrival City
                     </label>
                     <input

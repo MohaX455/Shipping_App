@@ -44,7 +44,7 @@ export function HelpContent() {
                     {topics.map((step, index) => (
                         <div
                             key={index}
-                            className="bg-white border border-gray-200 rounded-lg p-6 text-center"
+                            className="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-lg"
                         >
                             {/* Icon */}
                             <div className="flex justify-center mb-4">

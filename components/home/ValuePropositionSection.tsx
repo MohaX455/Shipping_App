@@ -1,28 +1,25 @@
+
+import { Check } from "lucide-react";
+
 export function ValuePropositionSection() {
     const features = [
         {
             icon: (
-                <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
-                </svg>
+                <Check className="w-8 h-8 text-green-600" />
             ),
             title: 'Save on Shipping',
             description: 'Reduce delivery costs by up to 50% compared to traditional carriers.',
         },
         {
             icon: (
-                <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
-                </svg>
+                <Check className="w-8 h-8 text-green-600" />
             ),
             title: 'Earn While You Travel',
             description: 'Monetize your trips by carrying vetted, insured parcels on your route.',
         },
         {
             icon: (
-                <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
-                </svg>
+                <Check className="w-8 h-8 text-green-600" />
             ),
             title: 'Safe & Transparent',
             description: 'Reviews, verified profiles, and real‑time tracking for peace of mind.',

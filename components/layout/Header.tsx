@@ -8,8 +8,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { authService } from '@/lib/auth/authService';
 import { usePathname } from 'next/navigation';
 import { NAV_LINKS, IMAGE_BASE } from '@/lib/constants';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faTwitter, faLinkedinIn, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaYoutube } from "react-icons/fa";
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -97,19 +96,19 @@ export function Header() {
                         <div className="hidden md:flex items-center gap-5 text-blue-950">
                             <div className="flex items-center text-md font-medium">Follow Us:</div>
                             <a href={contactData?.fb_link || '#'} target="_blank" rel="noreferrer" aria-label="facebook" className="hover:text-blue-600">
-                                <FontAwesomeIcon icon={faFacebookF} className="text-xl" />
+                                <FaFacebookF className="h-5 w-5"/>
                             </a>
                             <a href={contactData?.twitter_link || '#'} target="_blank" rel="noreferrer" aria-label="twitter" className="hover:text-sky-600">
-                                <FontAwesomeIcon icon={faTwitter} className="text-xl" />
+                                <FaTwitter className="h-5 w-5"/>
                             </a>
                             <a href={contactData?.linkedin_link || '#'} target="_blank" rel="noreferrer" aria-label="linkedin" className="hover:text-blue-700">
-                                <FontAwesomeIcon icon={faLinkedinIn} className="text-xl" />
+                                <FaLinkedinIn className="h-5 w-5"/>
                             </a>
                             <a href={contactData?.insta_link || '#'} target="_blank" rel="noreferrer" aria-label="instagram" className="hover:text-pink-600">
-                                <FontAwesomeIcon icon={faInstagram} className="text-xl" />
+                                <FaInstagram className="h-5 w-5"/>
                             </a>
                             <a href={contactData?.youtube_link || '#'} target="_blank" rel="noreferrer" aria-label="youtube" className="hover:text-red-600">
-                                <FontAwesomeIcon icon={faYoutube} className="text-xl" />
+                                <FaYoutube className="h-5 w-5 scale-110"/>
                             </a>
 
                             {/* Login button - keep exactly as current project's login design/behavior (visual icon replaced) */}
@@ -120,21 +119,15 @@ export function Header() {
                                     title="Login"
                                     onClick={() => authModal.openLogin()}
                                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') authModal.openLogin(); }}
-                                    className="ml-3 w-10 h-10 rounded-full bg-white border border-blue-950 flex items-center justify-center text-blue-950 hover:scale-105 focus:scale-105 focus:outline-none transition-transform cursor-pointer"
+                                    className="ml-6 w-7.5 h-7.5 flex items-center justify-center hover:scale-105 focus:scale-105 focus:outline-none cursor-pointer"
                                 >
-                                    <svg
-                                        className="w-5 h-5"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                        />
-                                    </svg>
+                                    <Image
+                                        src={`${IMAGE_BASE}/profile.png`}
+                                        alt="Login"
+                                        height={30}
+                                        width={30}
+                                        className="w-full h-full"
+                                    />
                                 </div>
                             ) : (
                                 <button onClick={handleLogout} className="ml-3 px-3 py-1.5 bg-blue-950 border border-blue-950 rounded-sm text-sm text-white hover:bg-white hover:text-blue-950 transition-transform cursor-pointer">Logout</button>
@@ -175,36 +168,24 @@ export function Header() {
                         <div className="flex items-center md:hidden">
                             {/* Mobile auth and menu buttons */}
                             {!isAuthenticated ? (
-                                <button onClick={() => authModal.openLogin()} className="p-2 text-slate-600 mr-2">
-                                    <svg
-                                        className="w-6 h-6"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                        />
-                                    </svg>
+                                <button onClick={() => authModal.openLogin()} className="w-6.5 h-6.5 flex items-center justify-center text-slate-600 mr-2.5">
+                                    <Image
+                                        src={`${IMAGE_BASE}/profile.png`}
+                                        alt="Login"
+                                        height={30}
+                                        width={30}
+                                        className="w-full h-full"
+                                    />
                                 </button>
                             ) : (
-                                <button onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)} className="p-2 text-slate-600 mr-2">
-                                    <svg
-                                        className="w-6 h-6"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                        />
-                                    </svg>
+                                <button onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)} className="-6.5 h-6.5 flex items-center justify-center text-slate-600 mr-2.5">
+                                    <Image
+                                        src={`${IMAGE_BASE}/profile.png`}
+                                        alt="Profile"
+                                        height={5}
+                                        width={5}
+                                        className="w-full h-full"
+                                    />
                                 </button>
                             )}
 
@@ -271,6 +252,6 @@ export function Header() {
                     )}
                 </div>
             </div>
-        </header>
+        </header >
     );
 }

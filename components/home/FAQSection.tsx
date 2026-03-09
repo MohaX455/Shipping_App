@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Gift, ArrowDown } from 'lucide-react';
 
 interface FAQItem {
     id: string;
@@ -69,7 +70,7 @@ export function FAQSection() {
 
     return (
         <section className="py-20 bg-white">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-330 mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Tabs */}
                 <div className="flex gap-4 mb-12 border-b border-slate-200">
                     <button
@@ -113,25 +114,22 @@ export function FAQSection() {
                         >
                             <button
                                 onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
-                                className="w-full px-6 py-4 flex items-center justify-between bg-gradient-to-r from-slate-50 to-white hover:from-slate-100 hover:to-slate-50 transition-colors"
+                                className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-slate-50 to-white hover:from-slate-100 hover:to-slate-50 transition-colors"
                             >
-                                <span className="text-left font-semibold text-slate-900 text-base font-heading">
-                                    {faq.question}
-                                </span>
-                                <svg
-                                    className={`w-6 h-6 text-slate-600 flex-shrink-0 transition-transform duration-300 ${openId === faq.id ? 'rotate-180' : ''
+                                <div className="flex items-center gap-4 text-left">
+                                    {/* Gift Icon */}
+                                    <span className="shrink-0 w-5 h-5 md:w-6 md:h-6">
+                                        <Gift />
+                                    </span>
+
+                                    <span className="font-semibold text-slate-900 text-base font-heading">
+                                        {faq.question}
+                                    </span>
+                                </div>
+                                <ArrowDown
+                                    className={`w-5 h-5 md:w-6 md:h-6 text-slate-600 flex-shrink-0 transition-transform duration-300 ${openId === faq.id ? 'rotate-180' : ''
                                         }`}
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                                    />
-                                </svg>
+                                />
                             </button>
 
                             {openId === faq.id && (
