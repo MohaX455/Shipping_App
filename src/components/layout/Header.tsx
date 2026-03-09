@@ -245,7 +245,6 @@ export function Header() {
                         <div className="border-t border-slate-100 bg-white md:hidden">
                             <div className="py-3 space-y-1">
                                 <Link href="/dashboard" className="block px-4 py-3 text-slate-700 hover:bg-slate-50" onClick={() => setIsProfileMenuOpen(false)}>My Space / Profile</Link>
-                                <Link href="/settings" className="block px-4 py-3 text-slate-700 hover:bg-slate-50" onClick={() => setIsProfileMenuOpen(false)}>Settings</Link>
                                 <button onClick={handleLogout} className="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50">Logout</button>
                             </div>
                         </div>

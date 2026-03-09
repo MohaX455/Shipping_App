@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { useAuthModal } from "@/hooks/useAuthModal";
 import { ArrowRight } from 'lucide-react'
 
