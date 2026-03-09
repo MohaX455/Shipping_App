@@ -78,7 +78,7 @@ export default function ForgotPasswordModal({ open, onClose, openLogin }: Props)
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={isDisabled}
-                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 placeholder:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-950 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full px-4 py-3 rounded-md bg-slate-50 border border-slate-400 placeholder:opacity-60 focus:outline-none focus:border focus:border-blue-900 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         placeholder="you@email.com"
                     />
                 </div>
