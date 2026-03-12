@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+    --primary-font: "Poppins", sans-serif;
+    --color-blue: #252b50;
+    --color-lightblue: #4053a1;
+    --color-skyblue: #00fcff;
+    --color-gray: #e5e2d3;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: var(--primary-font);
+}
+
+body {
+    font-size: 1rem;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: white;
+    font-family: var(--primary-font);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--primary-font);
+    /* font-weight: 700; */
+}
+
+/* Utility spacing used by pages */
+.sec-padd {
+    padding: 4rem 0;
+}
+
+@media (min-width: 1024px) {
+    .sec-padd {
+        padding: 6rem 0;
+    }
+}
+
+/* Improve container defaults for a professional layout */
+.container {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Mobile logo sizing */
+@media (max-width: 768px) {
+    .site-mobile-logo {
+        width: 200px !important;
+    }
+}
+
+/* Smooth animations for UI elements */
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: scaleY(0.5) translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scaleY(1) translateY(0);
+    }
+}
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
