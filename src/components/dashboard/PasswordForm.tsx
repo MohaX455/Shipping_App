@@ -1,6 +1,9 @@
+'use client'
+
 import { IMAGE_BASE } from "@/lib/constants";
 import Image from "next/image";
 import { SquarePen } from 'lucide-react'
+import { useAuth } from "@/contexts/AuthContext";
 
 type Props = {
     onSwitch: (view: "password" | "upcoming") => void;

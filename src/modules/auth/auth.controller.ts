@@ -35,6 +35,13 @@ export async function register(req: NextRequest) {
             )
         }
 
+        if (error.message === "MOBILE_ALREADY_EXISTS") {
+            return NextResponse.json(
+                { message: "Mobile already used" },
+                { status: 400 }
+            )
+        }
+
         return NextResponse.json(
             { message: "Internal server error" },
             { status: 500 }
@@ -126,7 +133,7 @@ export async function logout() {
 
         return response
     } catch (error: any) {
-        
+
         return NextResponse.json(
             { message: "Internal server error" },
             { status: 500 }

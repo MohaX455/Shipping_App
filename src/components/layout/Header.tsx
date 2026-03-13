@@ -2,10 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAuthModal } from '@/contexts/AuthModalContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { authService } from '@/lib/auth/authService';
 import { usePathname } from 'next/navigation';
 import { NAV_LINKS, IMAGE_BASE } from '@/lib/constants';
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaYoutube } from "react-icons/fa";
@@ -13,56 +12,10 @@ import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaYoutube } from "re
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-    const [isMounted, setIsMounted] = useState(false);
-    const [displayName, setDisplayName] = useState<string | null>(null);
-    const [contactData, setContactData] = useState<any>(null);
     const pathname = usePathname();
     const authModal = useAuthModal();
     const { user, logout } = useAuth();
     const isAuthenticated = Boolean(user);
-
-    useEffect(() => setIsMounted(true), []);
-
-    useEffect(() => {
-        if (user && (user as any).name) {
-            setDisplayName((user as any).name);
-            return;
-        }
-        const stored = authService.getUser();
-        if (stored && stored.name) {
-            setDisplayName(stored.name);
-            return;
-        }
-        try {
-            const raw = typeof window !== 'undefined' ? localStorage.getItem('authState') : null;
-            if (raw) {
-                const parsed = JSON.parse(raw);
-                const fn = parsed?.user?.first_name || parsed?.user?.name || parsed?.user?.firstName;
-                if (fn) setDisplayName(fn);
-            }
-        } catch (e) { }
-    }, [user]);
-
-    useEffect(() => {
-        const handler = () => {
-            const stored = authService.getUser();
-            if (stored && stored.name) setDisplayName(stored.name);
-        };
-        if (typeof window !== 'undefined') window.addEventListener('app:logged_in', handler as EventListener);
-        return () => { if (typeof window !== 'undefined') window.removeEventListener('app:logged_in', handler as EventListener); };
-    }, []);
-
-    useEffect(() => {
-        const fetchContact = async () => {
-            try {
-                const res = await fetch('https://api.jetcamer.com/social-shipping/api/contact-page');
-                if (!res.ok) return;
-                const data = await res.json();
-                setContactData(data);
-            } catch (e) { }
-        };
-        fetchContact();
-    }, []);
 
     const isActive = (href: string) => {
         if (href === '/' && pathname === '/') return true;
@@ -96,19 +49,19 @@ export function Header() {
 
                         <div className="hidden md:flex items-center gap-5 text-blue-950">
                             <div className="flex items-center text-md font-medium">Follow Us:</div>
-                            <a href={contactData?.fb_link || '#'} target="_blank" rel="noreferrer" aria-label="facebook" className="hover:text-blue-600">
+                            <a href={'#'} target="_blank" rel="noreferrer" aria-label="facebook" className="hover:text-blue-600">
                                 <FaFacebookF className="h-5 w-5" />
                             </a>
-                            <a href={contactData?.twitter_link || '#'} target="_blank" rel="noreferrer" aria-label="twitter" className="hover:text-sky-600">
+                            <a href={'#'} target="_blank" rel="noreferrer" aria-label="twitter" className="hover:text-sky-600">
                                 <FaTwitter className="h-5 w-5" />
                             </a>
-                            <a href={contactData?.linkedin_link || '#'} target="_blank" rel="noreferrer" aria-label="linkedin" className="hover:text-blue-700">
+                            <a href={'#'} target="_blank" rel="noreferrer" aria-label="linkedin" className="hover:text-blue-700">
                                 <FaLinkedinIn className="h-5 w-5" />
                             </a>
-                            <a href={contactData?.insta_link || '#'} target="_blank" rel="noreferrer" aria-label="instagram" className="hover:text-pink-600">
+                            <a href={'#'} target="_blank" rel="noreferrer" aria-label="instagram" className="hover:text-pink-600">
                                 <FaInstagram className="h-5 w-5" />
                             </a>
-                            <a href={contactData?.youtube_link || '#'} target="_blank" rel="noreferrer" aria-label="youtube" className="hover:text-red-600">
+                            <a href={'#'} target="_blank" rel="noreferrer" aria-label="youtube" className="hover:text-red-600">
                                 <FaYoutube className="h-5 w-5 scale-110" />
                             </a>
 
