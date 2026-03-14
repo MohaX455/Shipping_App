@@ -18,8 +18,7 @@ export function Header() {
     const isAuthenticated = Boolean(user);
 
     const name = user?.first_name
-    if (!name) return console.log('Unknown')
-    const names = name.split(" ");
+    const names = name ? name.split(" ") : [];
     const initials = names.map(n => n[0].toUpperCase()).join("");
 
     const isActive = (href: string) => {
@@ -130,7 +129,7 @@ export function Header() {
                                         ? 'text-blue-900'
                                         : 'text-slate-700 hover:text-slate-900'}`}
                                 >
-                                    <div className='py-1 pl-1 pr-2 rounded-md bg-blue-950 text-white flex gap-0.5'>
+                                    <div className='py-1 pl-1 pr-2 rounded-md bg-blue-950 text-white flex gap-1'>
                                         <div className='h-7 w-7'>
                                             <Image
                                                 src={`${IMAGE_BASE}/male-user.png`}
