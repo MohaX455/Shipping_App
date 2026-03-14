@@ -6,6 +6,7 @@ import { Trip } from "./SwitchForms";
 import { IMAGE_BASE } from "@/lib/constants";
 import { SquarePen, PlaneTakeoff, PlaneLanding, Calendar, Luggage } from 'lucide-react'
 import UpcomingList from "./UpcomingList";
+import { useAuth } from "@/contexts/AuthContext";
 
 type Props = {
     onSwitch: (view: "password" | "upcoming") => void;
@@ -13,6 +14,9 @@ type Props = {
 };
 
 export default function UpcomingForm({ onSwitch, onAdd }: Props) {
+
+    const { user } = useAuth()
+
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
     const [date, setDate] = useState("");
@@ -52,7 +56,7 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                             Edit Avatar
                         </button>
 
-                        <h2 className="text-lg font-semibold">example1</h2>
+                        <h2 className="text-lg font-semibold">{user?.first_name}</h2>
                     </div>
 
                     <div className="w-full flex flex-col items-center gap-3 px-5 py-10 bg-white">

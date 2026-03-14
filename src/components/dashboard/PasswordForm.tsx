@@ -10,6 +10,9 @@ type Props = {
 };
 
 export default function PasswordForm({ onSwitch }: Props) {
+
+    const { user } = useAuth()
+
     return (
         <div className="py-10 md:py-20 w-full flex justify-center items-center">
             <div className="max-w-330 w-full flex flex-col lg:flex-row gap-8">
@@ -32,7 +35,7 @@ export default function PasswordForm({ onSwitch }: Props) {
                             Edit Avatar
                         </button>
 
-                        <h2 className="text-lg font-semibold">example1</h2>
+                        <h2 className="text-lg font-semibold">{user?.first_name}</h2>
                     </div>
 
                     <div className="w-full flex flex-col items-center gap-3 px-5 py-10 bg-white">
