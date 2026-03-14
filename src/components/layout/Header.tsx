@@ -17,6 +17,11 @@ export function Header() {
     const { user, logout } = useAuth();
     const isAuthenticated = Boolean(user);
 
+    const name = user?.first_name
+    if (!name) return console.log('Unknown')
+    const names = name.split(" ");
+    const initials = names.map(n => n[0].toUpperCase()).join("");
+
     const isActive = (href: string) => {
         if (href === '/' && pathname === '/') return true;
         if (href !== '/' && pathname.startsWith(href)) return true;
@@ -125,10 +130,18 @@ export function Header() {
                                         ? 'text-blue-900'
                                         : 'text-slate-700 hover:text-slate-900'}`}
                                 >
-                                    Dashboard
-                                    {isActive('/dashboard') && (
-                                        <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-blue-900 rounded-full" />
-                                    )}
+                                    <div className='py-1 pl-1 pr-2 rounded-md bg-blue-950 text-white flex gap-0.5'>
+                                        <div className='h-7 w-7'>
+                                            <Image
+                                                src={`${IMAGE_BASE}/male-user.png`}
+                                                alt="Login"
+                                                height={30}
+                                                width={30}
+                                                className="w-full h-full"
+                                            />
+                                        </div>
+                                        <span className='text-lg'>{initials}</span>
+                                    </div>
                                 </Link>
                             )}
                         </div>
