@@ -17,8 +17,8 @@ export function Header() {
     const { user, logout } = useAuth();
     const isAuthenticated = Boolean(user);
 
-    const name = user?.first_name
-    const names = name ? name.split(" ") : [];
+    const name = user?.first_name || ""
+    const names = name.split(" ").filter(n => n.trim());
     const initials = names.map(n => n[0].toUpperCase()).join("");
 
     const isActive = (href: string) => {
