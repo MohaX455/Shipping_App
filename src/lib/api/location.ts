@@ -7,7 +7,7 @@ export type LocationSuggestion = {
 };
 
 export async function searchLocation(query: string): Promise<LocationSuggestion[]> {
-  const res = await fetch(`${BASE_URL}/location/${query}`);
+  const res = await fetch(`${BASE_URL}/location/${encodeURIComponent(query)}`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch location suggestions");
