@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import * as authService from "./auth.service"
 import { requireUser } from "@/middleware/auth"
+import { AppError } from "@/lib/errors/AppError"
 
 export async function register(req: NextRequest) {
 
@@ -26,19 +27,10 @@ export async function register(req: NextRequest) {
 
     } catch (error: any) {
 
-        console.log('Error', error)
-
-        if (error.message === "EMAIL_ALREADY_EXISTS") {
+        if (error instanceof AppError) {
             return NextResponse.json(
-                { message: "Email already used" },
-                { status: 400 }
-            )
-        }
-
-        if (error.message === "MOBILE_ALREADY_EXISTS") {
-            return NextResponse.json(
-                { message: "Mobile already used" },
-                { status: 400 }
+                { message: error.message },
+                { status: error.statusCode }
             )
         }
 
@@ -76,10 +68,10 @@ export async function login(req: NextRequest) {
 
     } catch (error: any) {
 
-        if (error.message === "INVALID_CREDENTIALS") {
+        if (error instanceof AppError) {
             return NextResponse.json(
-                { message: "Invalid email or password" },
-                { status: 401 }
+                { message: error.message },
+                { status: error.statusCode }
             )
         }
 
@@ -107,10 +99,10 @@ export async function me(req: NextRequest) {
         })
     } catch (error: any) {
 
-        if (error.message === "Unauthorized") {
+        if (error instanceof AppError) {
             return NextResponse.json(
-                { message: "Unauthorized" },
-                { status: 401 }
+                { message: error.message },
+                { status: error.statusCode }
             )
         }
 

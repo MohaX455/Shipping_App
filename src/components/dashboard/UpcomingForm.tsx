@@ -1,12 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Trip } from "./SwitchForms";
 import { IMAGE_BASE } from "@/lib/constants";
-import { SquarePen, PlaneTakeoff, PlaneLanding, Calendar, Luggage } from 'lucide-react'
+import { SquarePen, PlaneTakeoff, PlaneLanding, Calendar, Luggage, X } from 'lucide-react'
 import UpcomingList from "./UpcomingList";
 import { useAuth } from "@/contexts/AuthContext";
+import { searchLocation, getGeoData, LocationSuggestion } from "@/lib/api/location";
+import debounce from "lodash/debounce";
+import { useMemo } from "react";
+import { showToast } from '@/lib/toast/toast';
+import { useTravel } from "@/contexts/TravelContext";
+import { AppError } from "@/lib/errors/AppError";
 
 type Props = {
     onSwitch: (view: "password" | "upcoming") => void;
@@ -16,22 +22,216 @@ type Props = {
 export default function UpcomingForm({ onSwitch, onAdd }: Props) {
 
     const { user } = useAuth()
+    const { travels, createTravel } = useTravel()
 
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
     const [date, setDate] = useState("");
     const [weight, setWeight] = useState("");
-    const [trips, setTrips] = useState<Trip[]>([]);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (onAdd) {
-            onAdd({ from, to, date, weight });
-        }
+    // Autocompletion states for 'from'
+    const [suggestionsFrom, setSuggestionsFrom] = useState<LocationSuggestion[]>([]);
+    const [isSearchingFrom, setIsSearchingFrom] = useState(false);
+
+    // Autocompletion states for 'to'
+    const [suggestionsTo, setSuggestionsTo] = useState<LocationSuggestion[]>([]);
+    const [isSearchingTo, setIsSearchingTo] = useState(false);
+
+    // Geo data states
+    const [cityFrom, setCityFrom] = useState("");
+    const [stateFrom, setStateFrom] = useState("");
+    const [countryFrom, setCountryFrom] = useState("");
+    const [cityTo, setCityTo] = useState("");
+    const [stateTo, setStateTo] = useState("");
+    const [countryTo, setCountryTo] = useState("");
+
+    const [localError, setLocalError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    const debouncedSearchFrom = useMemo(
+        () =>
+            debounce(async (value: string) => {
+                try {
+                    setIsSearchingFrom(true);
+                    const results = await searchLocation(value);
+                    setSuggestionsFrom(results);
+                } catch (err) {
+                    console.error(err);
+                } finally {
+                    setIsSearchingFrom(false);
+                }
+            }, 300),
+        []
+    );
+
+    const debouncedSearchTo = useMemo(
+        () =>
+            debounce(async (value: string) => {
+                try {
+                    setIsSearchingTo(true);
+                    const results = await searchLocation(value);
+                    setSuggestionsTo(results);
+                } catch (err) {
+                    console.error(err);
+                } finally {
+                    setIsSearchingTo(false);
+                }
+            }, 300),
+        []
+    );
+
+    useEffect(() => {
+        return () => {
+            debouncedSearchFrom.cancel();
+            debouncedSearchTo.cancel();
+        };
+    }, [debouncedSearchFrom, debouncedSearchTo]);
+
+    const handleReset = () => {
+        setLocalError(null);
+        setCityFrom("");
+        setStateFrom("");
+        setCountryFrom("");
+        setCityTo("");
+        setStateTo("");
+        setCountryTo("");
         setFrom("");
         setTo("");
         setDate("");
         setWeight("");
+    };
+
+    // Handle Address Search for 'from'
+    const handleAddressSearchFrom = (value: string) => {
+        setFrom(value);
+
+        if (!value.trim()) {
+            setSuggestionsFrom([]);
+            return;
+        }
+
+        debouncedSearchFrom(value);
+    };
+
+    // Handle Select Address for 'from'
+    const handleSelectAddressFrom = async (item: LocationSuggestion) => {
+        setFrom(item.address);
+        setSuggestionsFrom([]);
+
+        try {
+            const geo = await getGeoData(item.latitude, item.longitude);
+
+            setCityFrom(geo.city?.name || "");
+            setStateFrom(geo.state?.name || "");
+            setCountryFrom(geo.country?.name || "");
+
+            setIsSearchingFrom(false);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const clearAddressFrom = () => {
+        setFrom("");
+        setSuggestionsFrom([]);
+        setCityFrom("");
+        setStateFrom("");
+        setCountryFrom("");
+    };
+
+    // Handle Address Search for 'to'
+    const handleAddressSearchTo = (value: string) => {
+        setTo(value);
+
+        if (!value.trim()) {
+            setSuggestionsTo([]);
+            return;
+        }
+
+        debouncedSearchTo(value);
+    };
+
+    // Handle Select Address for 'to'
+    const handleSelectAddressTo = async (item: LocationSuggestion) => {
+        setTo(item.address);
+        setSuggestionsTo([]);
+
+        try {
+            const geo = await getGeoData(item.latitude, item.longitude);
+
+            setCityTo(geo.city?.name || "");
+            setStateTo(geo.state?.name || "");
+            setCountryTo(geo.country?.name || "");
+
+            setIsSearchingTo(false);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const clearAddressTo = () => {
+        setTo("");
+        setSuggestionsTo([]);
+        setCityTo("");
+        setStateTo("");
+        setCountryTo("");
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLocalError(null);
+
+        // Validation
+        if (!user?.id) {
+            setLocalError('User not authenticated');
+            return;
+        }
+        if (!cityFrom) {
+            setLocalError('From location is required');
+            return;
+        }
+        if (!cityTo) {
+            setLocalError('To location is required');
+            return;
+        }
+        if (!date) {
+            setLocalError('Travel date is required');
+            return;
+        }
+        if (!weight) {
+            setLocalError('Max weight is required');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            // Create payload similar to SignupForm structure
+            const payload = {
+                travelerId: user.id,
+                fromWhere: cityFrom,
+                toWhere: cityTo,
+                maxWeight: weight,
+                travel_date: new Date(date),
+                from_country_name: countryFrom,
+                from_state_name: stateFrom,
+                to_country_name: countryTo,
+                to_state_name: stateTo,
+            };
+
+            await createTravel(payload);
+            showToast.success('Trip added successfully!');
+            handleReset();
+        } catch (err: unknown) {
+            let errorMsg = 'Failed to add trip. Please try again.';
+            if (err instanceof Error) {
+                errorMsg = err.message;
+            }
+            setLocalError(errorMsg);
+            showToast.error(errorMsg);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -90,19 +290,54 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                         </h1>
 
                         <form onSubmit={handleSubmit} className="space-y-4">
+                            {localError && (
+                                <div className="p-3 rounded-md bg-red-50 border border-red-200">
+                                    <p className="text-sm text-red-700">{localError}</p>
+                                </div>
+                            )}
 
                             <div className="flex flex-col sm:flex-row items-center gap-2">
                                 <label className="flex items-center gap-2 w-full sm:w-50 text-sm font-semibold text-[var(--color-lightblue)]">
                                     <PlaneTakeoff className="w-6 h-6 text-red-500" />
                                     From where
                                 </label>
-                                <input
-                                    value={from}
-                                    onChange={(e) => setFrom(e.target.value)}
-                                    className="flex-1 w-full border border-gray-400 rounded-md p-3 text-sm
-                                    focus:outline-none focus:border focus:border-[var(--color-lightblue)] transition"
-                                    placeholder="Select Location*"
-                                />
+                                <div className='relative flex-1 w-full'>
+                                    <input
+                                        value={from}
+                                        onChange={(e) => handleAddressSearchFrom(e.target.value)}
+                                        disabled={loading}
+                                        className="w-full pl-4 pr-10 py-3 border border-gray-400 rounded-md text-sm
+                                        focus:outline-none focus:border focus:border-[var(--color-lightblue)] transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                        placeholder="Select Location*"
+                                    />
+                                    {isSearchingFrom && (
+                                        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                                            <span className="block w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin"></span>
+                                        </div>
+                                    )}
+                                    {!isSearchingFrom && from && (
+                                        <button
+                                            type="button"
+                                            onClick={clearAddressFrom}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2"
+                                        >
+                                            <X className='h-5 w-5 text-slate-400 hover:text-slate-600 cursor-pointer' />
+                                        </button>
+                                    )}
+                                    {suggestionsFrom.length > 0 && (
+                                        <ul className="absolute z-50 mt-1 w-full bg-white border border-slate-300 rounded-xs shadow-lg max-h-36 overflow-auto">
+                                            {suggestionsFrom.map((item, index) => (
+                                                <li
+                                                    key={index}
+                                                    onClick={() => handleSelectAddressFrom(item)}
+                                                    className="px-4 py-2 text-sm cursor-pointer hover:bg-slate-100"
+                                                >
+                                                    {item.address}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
                             </div>
 
                             <div className="flex flex-col sm:flex-row items-center gap-2">
@@ -110,13 +345,41 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                                     <PlaneLanding className="w-6 h-6 text-red-500" />
                                     To where
                                 </label>
-                                <input
-                                    value={to}
-                                    onChange={(e) => setTo(e.target.value)}
-                                    className="flex-1 w-full border border-gray-400 rounded-md p-3 text-sm
-                                    focus:outline-none focus:border focus:border-[var(--color-lightblue)] transition"
-                                    placeholder="Select Location*"
-                                />
+                                <div className='relative flex-1 w-full'>
+                                    <input
+                                        value={to}
+                                        onChange={(e) => handleAddressSearchTo(e.target.value)} disabled={loading} className="w-full pl-4 pr-10 py-3 border border-gray-400 rounded-md text-sm
+                                        focus:outline-none focus:border focus:border-[var(--color-lightblue)] transition"
+                                        placeholder="Select Location*"
+                                    />
+                                    {isSearchingTo && (
+                                        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                                            <span className="block w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin"></span>
+                                        </div>
+                                    )}
+                                    {!isSearchingTo && to && (
+                                        <button
+                                            type="button"
+                                            onClick={clearAddressTo}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2"
+                                        >
+                                            <X className='h-5 w-5 text-slate-400 hover:text-slate-600 cursor-pointer' />
+                                        </button>
+                                    )}
+                                    {suggestionsTo.length > 0 && (
+                                        <ul className="absolute z-50 mt-1 w-full bg-white border border-slate-300 rounded-xs shadow-lg max-h-36 overflow-auto">
+                                            {suggestionsTo.map((item, index) => (
+                                                <li
+                                                    key={index}
+                                                    onClick={() => handleSelectAddressTo(item)}
+                                                    className="px-4 py-2 text-sm cursor-pointer hover:bg-slate-100"
+                                                >
+                                                    {item.address}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
                             </div>
 
                             <div className="flex flex-col sm:flex-row items-center gap-2">
@@ -128,8 +391,9 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                                     type="date"
                                     value={date}
                                     onChange={(e) => setDate(e.target.value)}
+                                    disabled={loading}
                                     className="flex-1 w-full border border-gray-400 rounded-md p-3 text-sm
-                                    focus:outline-none focus:border focus:border-[var(--color-lightblue)] transition"
+                                    focus:outline-none focus:border focus:border-[var(--color-lightblue)] transition disabled:opacity-50 disabled:cursor-not-allowed"
                                 />
                             </div>
 
@@ -143,8 +407,9 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                                         type="number"
                                         value={weight}
                                         onChange={(e) => setWeight(e.target.value)}
+                                        disabled={loading}
                                         className="flex-1 min-w-0 border border-gray-400 rounded-md p-3 text-sm
-                 focus:outline-none focus:border focus:border-[var(--color-lightblue)] transition"
+                 focus:outline-none focus:border focus:border-[var(--color-lightblue)] transition disabled:opacity-50 disabled:cursor-not-allowed"
                                         placeholder="Enter weight here"
                                     />
                                     <input
@@ -162,10 +427,11 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                             <div className="flex justify-center pt-2">
                                 <button
                                     type="submit"
+                                    disabled={loading}
                                     className="bg-[var(--color-lightblue)] text-white text-base w-50 mx-auto py-2 rounded-md
-                                    font-medium transition hover:opacity-90 focus:outline-none cursor-pointer"
+                                    font-medium transition hover:opacity-90 focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    Save
+                                    {loading ? 'Saving...' : 'Save'}
                                 </button>
                             </div>
                         </form>
@@ -176,7 +442,7 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                         <h1 className="text-xl md:text-2xl font-bold text-center">
                             Upcoming Traveling List
                         </h1>
-                        <UpcomingList trips={trips} />
+                        <UpcomingList />
                     </div>
                 </main>
             </div>

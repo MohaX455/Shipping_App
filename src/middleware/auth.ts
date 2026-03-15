@@ -1,5 +1,6 @@
 import { verifyToken } from "@/lib/auth/jwt"
 import { NextRequest } from "next/server"
+import { AppError } from "@/lib/errors/AppError"
 
 type JwtPayload = {
   userId: string
@@ -10,7 +11,7 @@ export function requireUser(req: NextRequest): string {
   const token = req.cookies.get("token")?.value
 
   if (!token) {
-    throw new Error("Unauthorized")
+    throw new AppError("Unauthorized", 401)
   }
 
   try {
