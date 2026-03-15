@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
 
   state_name: {
     type: String,
-    default: 'unknown'
+    required: true
   },
 
   city_name: {

@@ -22,7 +22,15 @@ export function Modal({ open, onClose, title, children, size = 'md' }: ModalProp
             setIsRendered(true);
             // Give browser time to paint the DOM before triggering animation
             const t = setTimeout(() => setIsAnimating(true), 10);
-            return () => clearTimeout(t);
+
+            // prevent background scroll while modal is open
+            const originalOverflow = document.body.style.overflow;
+            document.body.style.overflow = "hidden";
+
+            return () => {
+                clearTimeout(t);
+                document.body.style.overflow = originalOverflow;
+            };
         } else {
             // play closing animation then unmount
             setIsAnimating(false);

@@ -1,9 +1,11 @@
+// app/dashboard/page.tsx
 "use client";
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { SwitchForms } from "@/components/dashboard";
+import { TravelProvider } from "@/contexts/TravelContext";
 
 export default function DashboardPage() {
     const { user, loading } = useAuth();
@@ -25,7 +27,9 @@ export default function DashboardPage() {
 
     return (
         <main className="w-full bg-slate-50">
-            <SwitchForms />
+            <TravelProvider>
+                <SwitchForms />
+            </TravelProvider>
         </main>
     );
 }

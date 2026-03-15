@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { requireUser } from '@/middleware/auth';
 
 // the exported function must be the default export when using proxy
 export default async function proxy(req: NextRequest) {
@@ -7,13 +8,10 @@ export default async function proxy(req: NextRequest) {
 
     // protect dashboard and its subpaths
     if (pathname.startsWith('/dashboard')) {
-        const cookie = req.headers.get('cookie') || '';
-        const res = await fetch(`${req.nextUrl.origin}/api/auth/me`, {
-            headers: { cookie },
-        });
-        if (res.ok) {
+        try {
+            requireUser(req);
             return NextResponse.next();
-        } else {
+        } catch {
             const url = req.nextUrl.clone();
             url.pathname = '/';
             return NextResponse.redirect(url);

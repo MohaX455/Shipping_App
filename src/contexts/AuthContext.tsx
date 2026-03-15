@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 import * as authService from '@/services/auth.client'
-import { RegisterUserInput } from '@/types/auth'
+import { RegisterUserInput } from '@/types/auth.type'
 
 type AuthUser = {
     id: string

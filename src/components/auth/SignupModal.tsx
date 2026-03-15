@@ -4,7 +4,7 @@ import Modal from '@/components/ui/Modal';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState, useEffect } from 'react';
 import { showToast } from '@/lib/toast/toast';
-import { RegisterUserInput } from '@/types/auth';
+import { RegisterUserInput } from '@/types/auth.type';
 import { searchLocation, getGeoData, LocationSuggestion } from "@/lib/api/location";
 import debounce from "lodash/debounce";
 import { useMemo } from "react";
@@ -242,7 +242,7 @@ export default function SignupModal({ open, onClose, openLogin }: Props) {
                                 onClick={clearAddress}
                                 className="absolute right-3 top-1/2 -translate-y-1/2"
                             >
-                                <X className='h-5 w-5 text-slate-400 hover:text-slate-600 cursor-pointer'/>
+                                <X className='h-5 w-5 text-slate-400 hover:text-slate-600 cursor-pointer' />
                             </button>
                         )}
                     </div>
