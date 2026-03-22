@@ -14,11 +14,20 @@ async function parseResponse<T>(res: Response): Promise<T> {
 export async function createTravel(data: CreateTravelInfoInput): Promise<TravelInfo> {
     const res = await fetch("/api/travels/info", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify(data)
     })
-    return parseResponse<TravelInfo>(res)
+    const dataJson = await parseResponse<{ travelerInfo: TravelInfo }>(res)
+    return dataJson.travelerInfo
+}
+
+// GET all travels
+export async function getTravels(): Promise<TravelInfo[]> {
+    const res = await fetch("/api/travels/info", {
+        method: "GET",
+        credentials: "include"
+    })
+    const dataJson = await parseResponse<{ travelerInfos: TravelInfo[] }>(res)
+    return dataJson.travelerInfos
 }

@@ -19,3 +19,8 @@ export async function createTravelInfo(data: CreateTravelInfoInput) {
 
     return { travelerInfo }
 }
+
+export async function getTravelInfosByTravelerId(travelerId: string) {
+    await connectDB()
+    return await travelInfoRepo.getTravelInfosByTravelerId(travelerId)
+}
