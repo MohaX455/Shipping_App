@@ -264,7 +264,7 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                             onClick={() => onSwitch("password")}
                             className="w-full text-left bg-[var(--color-gray)] p-3 rounded text-black cursor-pointer"
                         >
-                            upcoming list
+                            Upcoming list
                         </button>
 
                         <button
@@ -433,7 +433,7 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                                             focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {loading && (
-                                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                        <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                                     )}
                                     <span>{loading ? 'Saving' : 'Save'}</span>
                                 </button>

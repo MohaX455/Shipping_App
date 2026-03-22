@@ -25,7 +25,7 @@ export default function TravelCard({ travel }: TravelCardProps) {
         >
             {/* Top actions floating */}
             <div className="flex justify-end gap-3">
-                <button className="text-gray-500 hover:text-green-600 cursor-pointer">
+                <button className="text-gray-500 hover:text-[var(--color-lightblue)] cursor-pointer">
                     <SquarePen className="w-5 h-5" />
                 </button>
                 {/* <button className="text-gray-500 hover:text-red-600 cursor-pointer">

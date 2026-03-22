@@ -37,7 +37,7 @@ export async function createTravelInfo(req: NextRequest) {
 
 }
 
-export async function getTravelInfos(req: NextRequest) {
+export async function getTravelInfosByTravelerId(req: NextRequest) {
 
     try {
         const userId = requireUser(req)

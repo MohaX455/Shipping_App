@@ -43,7 +43,7 @@ export default function PasswordForm({ onSwitch }: Props) {
                             onClick={() => onSwitch("password")}
                             className="w-full text-left bg-[var(--color-lightblue)] p-3 rounded text-white cursor-pointer"
                         >
-                            upcoming list
+                            Upcoming list
                         </button>
 
                         <button

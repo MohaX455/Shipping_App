@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTravel } from '@/contexts/TravelContext';
-import TravelCard from '@/components/travel/TravelCard';
+import TravelCard from '@/components/dashboard/TravelCard';
 
 export default function UpcomingList() {
     const { travels, loading } = useTravel();
