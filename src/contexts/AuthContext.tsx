@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 import * as authService from '@/services/auth.client'
-import { RegisterUserInput } from '@/types/auth.type'
+import { ChangePasswordDTO, RegisterUserInput } from '@/types/auth.type'
 
 type AuthUser = {
     id: string
@@ -15,6 +15,7 @@ type AuthContextType = {
     loading: boolean
     login: (email: string, password: string) => Promise<void>
     signup: (data: RegisterUserInput) => Promise<void>
+    changePassword: (data: ChangePasswordDTO) => Promise<void>
     requestPasswordReset: (email: string) => Promise<void>
     logout: () => Promise<void>
 }
@@ -70,6 +71,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }
 
+    const changePassword = async (data: ChangePasswordDTO) => {
+        try {
+            await authService.changePassword(data)
+        } finally { }
+    }
+
     const requestPasswordReset = async (email: string) => {
         setLoading(true)
         try {
@@ -86,7 +93,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return (
         <AuthContext.Provider
-            value={{ user, login, signup, requestPasswordReset, logout, loading }}
+            value={{ user, login, signup, changePassword, requestPasswordReset, logout, loading }}
         >
             {children}
         </AuthContext.Provider>

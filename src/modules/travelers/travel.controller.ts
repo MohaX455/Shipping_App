@@ -36,3 +36,30 @@ export async function createTravelInfo(req: NextRequest) {
     }
 
 }
+
+export async function getTravelInfosByTravelerId(req: NextRequest) {
+
+    try {
+        const userId = requireUser(req)
+
+        const travelerInfos = await travelInfoService.getTravelInfosByTravelerId(userId)
+
+        return NextResponse.json(
+            { travelerInfos },
+            { status: 200 }
+        )
+    } catch (err: any) {
+
+        if (err instanceof AppError) {
+            return NextResponse.json(
+                { message: err.message },
+                { status: err.statusCode }
+            )
+        }
+
+        return NextResponse.json(
+            { message: "Internal server error" },
+            { status: 500 }
+        )
+    }
+}

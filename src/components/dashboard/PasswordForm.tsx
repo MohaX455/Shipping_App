@@ -4,6 +4,8 @@ import { IMAGE_BASE } from "@/lib/constants";
 import Image from "next/image";
 import { SquarePen } from 'lucide-react'
 import { useAuth } from "@/contexts/AuthContext";
+import { useState } from "react";
+import { showToast } from '@/lib/toast/toast';
 
 type Props = {
     onSwitch: (view: "password" | "upcoming") => void;
@@ -11,7 +13,45 @@ type Props = {
 
 export default function PasswordForm({ onSwitch }: Props) {
 
-    const { user } = useAuth()
+    const { user, changePassword } = useAuth()
+
+    const [newPassword, setNewPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [localError, setLocalError] = useState<string | null>(null)
+    const [loading, setLoading] = useState(false)
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLocalError(null)
+
+        if (!newPassword.trim()) {
+            setLocalError('New password is required')
+            return
+        }
+
+        if (!confirmPassword.trim()) {
+            setLocalError('Confirm password is required')
+            return
+        }
+
+        setLoading(true)
+
+        try {
+            await changePassword({ password: newPassword, confirmPassword })
+            showToast.success('Password changed successfully!')
+            setNewPassword("")
+            setConfirmPassword("")
+        } catch (err: unknown) {
+            let errorMsg = 'Failed to change password. Please try again.'
+            if (err instanceof Error) {
+                errorMsg = err.message
+            }
+            setLocalError(errorMsg)
+            showToast.error(errorMsg)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <div className="py-10 md:py-20 w-full flex justify-center items-center">
@@ -43,7 +83,7 @@ export default function PasswordForm({ onSwitch }: Props) {
                             onClick={() => onSwitch("password")}
                             className="w-full text-left bg-[var(--color-lightblue)] p-3 rounded text-white cursor-pointer"
                         >
-                            upcoming list
+                            Upcoming list
                         </button>
 
                         <button
@@ -67,7 +107,12 @@ export default function PasswordForm({ onSwitch }: Props) {
                             Change Password
                         </h1>
 
-                        <form className="space-y-5">
+                        <form onSubmit={handleSubmit} className="space-y-5">
+                            {localError && (
+                                <div className="p-3 rounded-md bg-red-50 border border-red-200">
+                                    <p className="text-sm text-red-700">{localError}</p>
+                                </div>
+                            )}
                             <div className="flex flex-col sm:flex-row items-center gap-2">
                                 <label
                                     htmlFor="newPassword"
@@ -79,6 +124,8 @@ export default function PasswordForm({ onSwitch }: Props) {
                                     id="newPassword"
                                     type="password"
                                     placeholder="Enter New Password"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
                                     className="flex-1 w-full border border-gray-400 rounded-md p-3 text-sm
                                     focus:outline-none focus:border focus:border-[var(--color-lightblue)] transition"
                                 />
@@ -95,6 +142,8 @@ export default function PasswordForm({ onSwitch }: Props) {
                                     id="confirmPassword"
                                     type="password"
                                     placeholder="Enter Confirm Password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
                                     className="flex-1 w-full border border-gray-400 rounded-md p-3 text-sm
                                     focus:outline-none focus:border focus:border-[var(--color-lightblue)] transition"
                                 />
@@ -103,15 +152,15 @@ export default function PasswordForm({ onSwitch }: Props) {
                             <div className="flex justify-center pt-2">
                                 <button
                                     type="submit"
-                                    className="bg-[var(--color-lightblue)] text-white text-base w-50 mx-auto py-2 rounded-md
+                                    disabled={loading}
+                                    className="bg-[var(--color-lightblue)] text-white text-base w-full max-w-50 mx-auto py-2 rounded-md
                  font-medium transition hover:opacity-90 focus:outline-none
-                 focus:ring-2 focus:ring-[var(--color-lightblue)] focus:ring-offset-2 cursor-pointer"
+                 focus:ring-offset-2 cursor-pointer disabled:opacity-50"
                                 >
-                                    Save
+                                    {loading ? 'Saving...' : 'Save'}
                                 </button>
                             </div>
                         </form>
-
                     </div>
                 </main>
             </div>

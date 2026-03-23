@@ -17,3 +17,10 @@ export async function createUser(data: RegisterUserInput) {
 export async function findUserById(id: string) {
     return User.findById(id)
 }
+
+export async function changePassword(id: string, hashedPassword: string) {
+    await User.updateOne(
+        { _id: id },
+        { $set: { password: hashedPassword } }
+    )
+}

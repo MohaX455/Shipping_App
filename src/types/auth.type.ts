@@ -8,3 +8,8 @@ export interface RegisterUserInput {
     city_name: string
     gender: string
 }
+
+export type ChangePasswordDTO = {
+    password: string
+    confirmPassword: string
+}

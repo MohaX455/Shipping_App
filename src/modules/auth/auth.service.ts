@@ -88,3 +88,10 @@ export async function me(userId: string) {
         first_name: user.first_name
     }
 }
+
+export async function changePassword(userId: string, password: string) {
+
+    const hashedPassword = await hashPassword(password)
+
+    await authRepository.changePassword(userId, hashedPassword)
+}

@@ -264,7 +264,7 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                             onClick={() => onSwitch("password")}
                             className="w-full text-left bg-[var(--color-gray)] p-3 rounded text-black cursor-pointer"
                         >
-                            upcoming list
+                            Upcoming list
                         </button>
 
                         <button
@@ -428,10 +428,14 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="bg-[var(--color-lightblue)] text-white text-base w-50 mx-auto py-2 rounded-md
-                                    font-medium transition hover:opacity-90 focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="bg-[var(--color-lightblue)] text-white text-base w-50 mx-auto py-2 px-4 rounded-md
+                                            font-medium flex items-center justify-center gap-2 transition hover:opacity-90
+                                            focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {loading ? 'Saving...' : 'Save'}
+                                    {loading && (
+                                        <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                    )}
+                                    <span>{loading ? 'Saving' : 'Save'}</span>
                                 </button>
                             </div>
                         </form>
@@ -439,7 +443,7 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                     </div>
 
                     <div className="w-full mt-10">
-                        <h1 className="text-xl md:text-2xl font-bold text-center">
+                        <h1 className="text-xl md:text-2xl font-bold text-center mb-10">
                             Upcoming Traveling List
                         </h1>
                         <UpcomingList />
