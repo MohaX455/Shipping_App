@@ -1,4 +1,4 @@
-import { RegisterUserInput } from "@/types/auth.type"
+import { RegisterUserInput, ChangePasswordDTO } from "@/types/auth.type"
 
 // helper for parsing JSON response and throwing on HTTP error
 async function parseResponse<T>(res: Response): Promise<T> {
@@ -54,6 +54,19 @@ export async function logout() {
     if (!res.ok) {
         throw new Error('Logout failed')
     }
+}
+
+export async function changePassword(data: ChangePasswordDTO) {
+    const res = await fetch("/api/auth/change-password", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify(data)
+    })
+
+    return parseResponse<any>(res)
 }
 
 export async function requestPasswordReset(email: string) {
