@@ -13,6 +13,7 @@ import { useMemo } from "react";
 import { showToast } from '@/lib/toast/toast';
 import { useTravel } from "@/contexts/TravelContext";
 import { AppError } from "@/lib/errors/AppError";
+import { TravelInfo } from '@/types/travelInfo.type';
 
 type Props = {
     onSwitch: (view: "password" | "upcoming") => void;
@@ -22,7 +23,10 @@ type Props = {
 export default function UpcomingForm({ onSwitch, onAdd }: Props) {
 
     const { user } = useAuth()
-    const { travels, createTravel } = useTravel()
+    const { travels, createTravel, updateTravel } = useTravel()
+
+    const [selectedTravel, setSelectedTravel] = useState<TravelInfo | null>(null)
+    const isEditing = Boolean(selectedTravel)
 
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
@@ -47,6 +51,21 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
 
     const [localError, setLocalError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+
+    const handleEditTravel = (travel: TravelInfo) => {
+        setSelectedTravel(travel)
+        setFrom(travel.fromWhere)
+        setCityFrom(travel.fromWhere)
+        setStateFrom(travel.from_state_name)
+        setCountryFrom(travel.from_country_name)
+        setTo(travel.toWhere)
+        setCityTo(travel.toWhere)
+        setStateTo(travel.to_state_name)
+        setCountryTo(travel.to_country_name)
+        setDate(new Date(travel.travel_date).toISOString().split('T')[0])
+        setWeight(travel.maxWeight.toString())
+        setLocalError(null)
+    }
 
     const debouncedSearchFrom = useMemo(
         () =>
@@ -99,6 +118,7 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
         setTo("");
         setDate("");
         setWeight("");
+        setSelectedTravel(null);
     };
 
     // Handle Address Search for 'from'
@@ -205,25 +225,28 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
 
         setLoading(true);
 
-        try {
-            // Create payload similar to SignupForm structure
-            const payload = {
-                travelerId: user.id,
-                fromWhere: cityFrom,
-                toWhere: cityTo,
-                maxWeight: weight,
-                travel_date: new Date(date),
-                from_country_name: countryFrom,
-                from_state_name: stateFrom,
-                to_country_name: countryTo,
-                to_state_name: stateTo,
-            };
+        const payload = {
+            fromWhere: cityFrom,
+            toWhere: cityTo,
+            maxWeight: Number(weight),
+            travel_date: date,
+            from_country_name: countryFrom,
+            from_state_name: stateFrom,
+            to_country_name: countryTo,
+            to_state_name: stateTo,
+        };
 
-            await createTravel(payload);
-            showToast.success('Trip added successfully!');
+        try {
+            if (selectedTravel) {
+                await updateTravel(selectedTravel._id, payload);
+                showToast.success('Trip updated successfully!');
+            } else {
+                await createTravel({ travelerId: user.id, ...payload, maxWeight: weight });
+                showToast.success('Trip added successfully!');
+            }
             handleReset();
         } catch (err: unknown) {
-            let errorMsg = 'Failed to add trip. Please try again.';
+            let errorMsg = 'Failed to save trip. Please try again.';
             if (err instanceof Error) {
                 errorMsg = err.message;
             }
@@ -286,7 +309,7 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                     <div className="w-full bg-white shadow-md rounded-xs p-6 md:p-8">
 
                         <h1 className="text-xl md:text-2xl font-bold mb-6 text-center">
-                            From Where, To Where And When Do You Go
+                            {isEditing ? 'Update Upcoming Trip' : 'From Where, To Where And When Do You Go'}
                         </h1>
 
                         <form onSubmit={handleSubmit} className="space-y-4">
@@ -424,19 +447,29 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                                 </div>
                             </div>
 
-                            <div className="flex justify-center pt-2">
+                            <div className="flex flex-col items-center gap-3 pt-2">
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="bg-[var(--color-lightblue)] text-white text-base w-50 mx-auto py-2 px-4 rounded-md
+                                    className="bg-[var(--color-lightblue)] text-white text-base w-full max-w-50 mx-auto py-2 px-4 rounded-md
                                             font-medium flex items-center justify-center gap-2 transition hover:opacity-90
                                             focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {loading && (
                                         <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                                     )}
-                                    <span>{loading ? 'Saving' : 'Save'}</span>
+                                    <span>{isEditing ? (loading ? 'Updating' : 'Update Trip') : (loading ? 'Saving' : 'Add Trip')}</span>
                                 </button>
+                                {isEditing && (
+                                    <button
+                                        type="button"
+                                        onClick={handleReset}
+                                        disabled={loading}
+                                        className="text-sm text-slate-600 underline hover:text-slate-800 disabled:opacity-50 cursor-pointer"
+                                    >
+                                        Cancel edit
+                                    </button>
+                                )}
                             </div>
                         </form>
 
@@ -446,7 +479,7 @@ export default function UpcomingForm({ onSwitch, onAdd }: Props) {
                         <h1 className="text-xl md:text-2xl font-bold text-center mb-10">
                             Upcoming Traveling List
                         </h1>
-                        <UpcomingList />
+                        <UpcomingList onEdit={handleEditTravel} />
                     </div>
                 </main>
             </div>

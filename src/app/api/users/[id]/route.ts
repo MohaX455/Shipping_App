@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-    return NextResponse.json({ success: true, user: null });
+  try {
+    return NextResponse.json({ success: true, user: null })
+  } catch (error: any) {
+    return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+  }
 }
