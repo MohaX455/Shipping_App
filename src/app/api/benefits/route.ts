@@ -1,10 +1,17 @@
 import { NextResponse } from 'next/server';
 
-// dummy handler to satisfy TypeScript module requirement
 export async function GET() {
-  return NextResponse.json({ success: true, benefits: [] });
+  try {
+    return NextResponse.json({ success: true, benefits: [] })
+  } catch (error: any) {
+    return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+  }
 }
 
 export async function POST() {
-  return NextResponse.json({ success: true });
+  try {
+    return NextResponse.json({ success: true })
+  } catch (error: any) {
+    return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+  }
 }

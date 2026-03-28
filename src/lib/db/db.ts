@@ -13,22 +13,23 @@ if (!cached) {
 }
 
 export async function connectDB() {
+  if (cached.conn) return cached.conn
 
-  if (cached.conn) {
+  try {
+    if (!cached.promise) {
+      cached.promise = mongoose.connect(MONGODB_URI, {
+        dbName: "social_shipping",
+        bufferCommands: false, // 🔥 important
+      })
+    }
+
+    cached.conn = await cached.promise
+    console.log("Connecting to:", MONGODB_URI)
+
     return cached.conn
+  } catch (error) {
+    cached.promise = null // 🔥 reset si erreur
+    console.error("❌ MongoDB connection error:", error)
+    throw error
   }
-
-  if (!cached.promise) {
-
-    cached.promise = mongoose.connect(MONGODB_URI, {
-      dbName: "social_shipping"
-    })
-
-  }
-
-  cached.conn = await cached.promise
-
-  console.log("MongoDB connected")
-
-  return cached.conn
 }

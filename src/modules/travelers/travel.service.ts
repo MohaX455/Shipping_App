@@ -1,5 +1,5 @@
 import { connectDB } from "@/lib/db/db";
-import { CreateTravelInfoInput } from "@/types/travelInfo.type";
+import { CreateTravelInfoInput, UpdateTravelInfoInput } from "@/types/travelInfo.type";
 import * as travelInfoRepo from "./travel.repository";
 import { AppError } from "@/lib/errors/AppError";
 
@@ -23,4 +23,31 @@ export async function createTravelInfo(data: CreateTravelInfoInput) {
 export async function getTravelInfosByTravelerId(travelerId: string) {
     await connectDB()
     return await travelInfoRepo.getTravelInfosByTravelerId(travelerId)
+}
+
+export async function getAllTravelsInfo() {
+    await connectDB()
+    return await travelInfoRepo.getAllTravelsInfo()
+}
+
+export async function updateTravelInfo(
+    id: string,
+    userId: string,
+    data: UpdateTravelInfoInput
+) {
+    await connectDB()
+
+    const travelInfo = await travelInfoRepo.getTravelInfoById(id)
+
+    if (!travelInfo) {
+        throw new AppError('Travel info not found', 404)
+    }
+
+    if (travelInfo.travelerId.toString() !== userId) {
+        throw new AppError('Unauthorized', 403)
+    }
+
+    const updatedTravel = await travelInfoRepo.updateTravelInfo(id, data)
+
+    return { updatedTravel }
 }

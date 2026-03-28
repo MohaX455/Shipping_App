@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import { changePassword } from '@/modules/auth/auth.controller'
+import { getAllTravelsInfo } from '@/modules/travelers/travel.controller'
 import { AppError } from '@/lib/errors/AppError'
 
-export async function POST(req: Request) {
+export async function GET() {
   try {
-    const result = await changePassword(req as any)
-    return NextResponse.json(result)
+    const result = await getAllTravelsInfo()
+    return NextResponse.json({ success: true, travelInfos: result.travelInfos }, { status: 200 })
   } catch (error: any) {
     if (error instanceof AppError) {
       return NextResponse.json({ message: error.message }, { status: error.statusCode })

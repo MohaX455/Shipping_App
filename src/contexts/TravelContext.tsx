@@ -2,13 +2,15 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 import * as travelService from '@/services/travel.client'
-import { CreateTravelInfoInput, TravelInfo } from '@/types/travelInfo.type'
+import { CreateTravelInfoInput, UpdateTravelInfoInput, TravelInfo } from "@/types/travelInfo.type"
 
 type TravelContextType = {
     travels: TravelInfo[]
     loading: boolean        // fetch initial
     creating: boolean       // création d’un travel
+    updating: boolean       // modification d’un travel
     createTravel: (data: CreateTravelInfoInput) => Promise<void>
+    updateTravel: (id: string, data: UpdateTravelInfoInput) => Promise<void>
 }
 
 const TravelContext = createContext<TravelContextType | null>(null)
@@ -17,6 +19,7 @@ export function TravelProvider({ children }: { children: ReactNode }) {
     const [travels, setTravels] = useState<TravelInfo[]>([])
     const [loading, setLoading] = useState(true)   // fetch initial
     const [creating, setCreating] = useState(false) // ajout d’un travel
+    const [updating, setUpdating] = useState(false) // modification d’un travel
 
     const createTravel = async (data: CreateTravelInfoInput) => {
         setCreating(true)
@@ -25,6 +28,16 @@ export function TravelProvider({ children }: { children: ReactNode }) {
             setTravels(prev => [newTravel, ...prev])
         } finally {
             setCreating(false)
+        }
+    }
+
+    const updateTravel = async (id: string, data: UpdateTravelInfoInput) => {
+        setUpdating(true)
+        try {
+            const updatedTravel = await travelService.updateTravel(id, data)
+            setTravels(prev => prev.map(travel => travel._id === id ? updatedTravel : travel))
+        } finally {
+            setUpdating(false)
         }
     }
 
@@ -49,7 +62,7 @@ export function TravelProvider({ children }: { children: ReactNode }) {
 
     return (
         <TravelContext.Provider
-            value={{ travels, loading, creating, createTravel }}
+            value={{ travels, loading, creating, updating, createTravel, updateTravel }}
         >
             {children}
         </TravelContext.Provider>

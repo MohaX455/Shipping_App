@@ -3,8 +3,13 @@
 import { useState } from 'react';
 import { useTravel } from '@/contexts/TravelContext';
 import TravelCard from '@/components/dashboard/TravelCard';
+import { TravelInfo } from '@/types/travelInfo.type';
 
-export default function UpcomingList() {
+type UpcomingListProps = {
+    onEdit?: (travel: TravelInfo) => void;
+};
+
+export default function UpcomingList({ onEdit }: UpcomingListProps) {
     const { travels, loading } = useTravel();
     const [itemsToShow, setItemsToShow] = useState(4);
 
@@ -34,7 +39,7 @@ export default function UpcomingList() {
         <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {travels.slice(0, itemsToShow).map(travel => (
-                    <TravelCard key={travel._id} travel={travel} />
+                    <TravelCard key={travel._id} travel={travel} onEdit={onEdit} />
                 ))}
             </div>
 
